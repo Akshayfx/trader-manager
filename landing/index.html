@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>ChartWise Trade Manager | Smart Trading Automation for MT4/MT5</title>
+    <meta name="title" content="ChartWise Trade Manager | Smart Trading Automation for MT4/MT5">
+    <meta name="description" content="The ultimate trade manager for MetaTrader 4 & 5. Automate your trading with Plan Trade, Auto Breakeven, Partial TP, AI Analysis & Prop Firm Mode. Start your 7-day free trial.">
+    <meta name="keywords" content="MT4 trade manager, MT5 automation, forex trading tools, prop firm challenge, auto breakeven, partial take profit, trading automation, forex EA, trade management software">
+    <meta name="author" content="ChartWise Team">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://chartwise.app">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chartwise.app">
+    <meta property="og:title" content="ChartWise Trade Manager | Smart Trading Automation for MT4/MT5">
+    <meta property="og:description" content="Automate your trading workflow with Plan Trade, Auto Breakeven, Partial TP, AI Analysis & Prop Firm Mode. Available for Windows, Mac, Android & iOS.">
+    <meta property="og:image" content="https://chartwise.app/og-image.jpg">
+    <meta property="og:site_name" content="ChartWise Trade Manager">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://chartwise.app">
+    <meta property="twitter:title" content="ChartWise Trade Manager | Smart Trading Automation">
+    <meta property="twitter:description" content="The ultimate trade manager for MT4/MT5. Automate your trading with AI-powered insights.">
+    <meta property="twitter:image" content="https://chartwise.app/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#00d4ff">
+    <meta name="msapplication-TileColor" content="#0a0a0f">
+    <meta name="theme-color" content="#0a0a0f">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data - Software Application -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ChartWise Trade Manager",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Windows, macOS, Android, iOS",
+        "offers": {
+            "@type": "Offer",
+            "price": "19.00",
+            "priceCurrency": "USD",
+            "priceValidUntil": "2025-12-31"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "10000"
+        },
+        "description": "Smart trading automation tool for MetaTrader 4 and 5 with Plan Trade, Auto Breakeven, Partial TP, AI Analysis & Prop Firm Mode.",
+        "softwareVersion": "3.0.0",
+        "fileSize": "50MB",
+        "downloadUrl": "https://chartwise.app/download",
+        "featureList": [
+            "Plan Trade with visual SL/TP lines",
+            "Auto Breakeven protection",
+            "Partial Take Profit automation",
+            "AI Trade Analysis reports",
+            "Prop Firm Mode with daily loss limits",
+            "News filter and economic calendar"
+        ],
+        "screenshot": "https://chartwise.app/screenshot.jpg",
+        "author": {
+            "@type": "Organization",
+            "name": "ChartWise Team"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ChartWise Trade Manager",
+        "url": "https://chartwise.app",
+        "logo": "https://chartwise.app/logo.png",
+        "sameAs": [
+            "https://twitter.com/chartwiseapp",
+            "https://www.youtube.com/@chartwise",
+            "https://discord.gg/chartwise"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@chartwise.app",
+            "contactType": "customer support"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data - FAQ Page -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is ChartWise Trade Manager?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ChartWise Trade Manager is a smart trading automation tool for MetaTrader 4 and 5. It helps traders automate their workflow with features like Plan Trade, Auto Breakeven, Partial Take Profit, AI Analysis, and Prop Firm Mode."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is ChartWise compatible with both MT4 and MT5?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, ChartWise works seamlessly with both MetaTrader 4 and MetaTrader 5 platforms. You can connect multiple terminals simultaneously using our Magic Key system."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does ChartWise offer a free trial?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we offer a 7-day free trial with full access to all features. No credit card required to start. After the trial, you can choose between Starter ($19/month) or Pro ($39/month) plans."
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="../logo.png" alt="ChartWise" class="logo-img">
+                <span>ChartWise</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="#pricing" class="btn btn-primary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-sparkles"></i>
+                    <span>Now with AI Trade Analysis</span>
+                </div>
+                <h1 class="hero-title">
+                    Trade Smarter with
+                    <span class="gradient-text">ChartWise</span>
+                </h1>
+                <p class="hero-subtitle">
+                    The ultimate trade manager for MT4/MT5. Automate your trading workflow, 
+                    protect your capital with Prop Firm mode, and get AI-powered insights to improve your performance.
+                </p>
+                <div class="hero-cta">
+                    <a href="#pricing" class="btn btn-primary btn-lg">
+                        <i class="fas fa-rocket"></i>
+                        Start Free Trial
+                    </a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-play-circle"></i>
+                        See How It Works
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Active Traders</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">$2M+</span>
+                        <span class="stat-label">Trades Managed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">User Rating</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="app-mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="mockup-title">ChartWise Trade Manager</span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="mockup-row">
+                            <div class="mockup-btn blue">
+                                <i class="fas fa-calculator"></i>
+                                <span>PLAN TRADE</span>
+                            </div>
+                            <div class="mockup-trade-btns">
+                                <div class="mockup-trade-btn sell">SELL</div>
+                                <div class="mockup-lot">0.05</div>
+                                <div class="mockup-trade-btn buy">BUY</div>
+                            </div>
+                        </div>
+                        <div class="mockup-row">
+                            <div class="mockup-btn orange">
+                                <i class="fas fa-bullseye"></i>
+                                <span>TARGET</span>
+                            </div>
+                            <div class="mockup-btn purple active">
+                                <i class="fas fa-layer-group"></i>
+                                <span>PARTIAL TP</span>
+                            </div>
+                        </div>
+                        <div class="mockup-row">
+                            <div class="mockup-btn teal">
+                                <i class="fas fa-sliders-h"></i>
+                                <span>CUSTOM CLOSE</span>
+                            </div>
+                            <div class="mockup-btn dark">
+                                <i class="fas fa-cut"></i>
+                                <span>CLOSE ½</span>
+                            </div>
+                        </div>
+                        <div class="mockup-row">
+                            <div class="mockup-btn cyan">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>SL → BE</span>
+                            </div>
+                            <div class="mockup-btn outline active">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>AUTO BE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Features</span>
+                <h2 class="section-title">Everything You Need to <span class="gradient-text">Trade Like a Pro</span></h2>
+                <p class="section-subtitle">Powerful tools designed to streamline your trading workflow and protect your capital</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Plan Trade</h3>
+                    <p>Set precise entry, stop loss, and take profit levels with visual lines on your chart. Auto-calculates lot size based on your risk parameters.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Visual SL/TP lines on chart</li>
+                        <li><i class="fas fa-check"></i> Auto direction detection</li>
+                        <li><i class="fas fa-check"></i> Risk % or $ risk options</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon purple">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Partial Take Profit</h3>
+                    <p>Set multiple TP levels to scale out of positions gradually. Close percentages at each level to lock in profits.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Multiple TP levels</li>
+                        <li><i class="fas fa-check"></i> Pips or price-based triggers</li>
+                        <li><i class="fas fa-check"></i> Visual lines on chart</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon cyan">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Auto Breakeven</h3>
+                    <p>Automatically move your stop loss to breakeven when price moves in your favor. Protect your trades with zero risk.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Custom trigger pips</li>
+                        <li><i class="fas fa-check"></i> Plus pips buffer option</li>
+                        <li><i class="fas fa-check"></i> SL at entry or in profit</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon pink">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Trade Analysis</h3>
+                    <p>Get detailed weekly and monthly reports analyzing your trading performance. AI identifies patterns and suggests improvements.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Win rate analysis</li>
+                        <li><i class="fas fa-check"></i> Best/worst pair insights</li>
+                        <li><i class="fas fa-check"></i> Personalized recommendations</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon orange">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Prop Firm Mode</h3>
+                    <p>Protect your prop firm challenge with daily loss limits, news blocking, and automatic trade closure when limits are hit.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Daily loss limit protection</li>
+                        <li><i class="fas fa-check"></i> News-based trade blocking</li>
+                        <li><i class="fas fa-check"></i> Auto-close on limit hit</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon green">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h3>News Filter</h3>
+                    <p>Stay informed about upcoming economic events with real-time news alerts. Customize which currencies and impact levels to monitor.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Economic calendar integration</li>
+                        <li><i class="fas fa-check"></i> Customizable currency pairs</li>
+                        <li><i class="fas fa-check"></i> Impact level filtering</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">How It Works</span>
+                <h2 class="section-title">Get Started in <span class="gradient-text">3 Simple Steps</span></h2>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Download & Install</h3>
+                        <p>Download ChartWise for your platform (Windows, Mac, Android, or iOS) and install the MT4/MT5 EA.</p>
+                    </div>
+                </div>
+
+                <div class="step-connector"></div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <h3>Connect Your Broker</h3>
+                        <p>Link ChartWise to your MT4/MT5 terminal using the Magic Key system. Supports multiple terminals.</p>
+                    </div>
+                </div>
+
+                <div class="step-connector"></div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Start Trading Smarter</h3>
+                        <p>Use Plan Trade to set your levels, enable Auto BE and Partial TP, and let ChartWise handle the rest.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Pricing</span>
+                <h2 class="section-title">Choose Your <span class="gradient-text">Plan</span></h2>
+                <p class="section-subtitle">Start with a 7-day free trial. No credit card required.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Starter</h3>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>
+                            <span class="amount">19</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Plan Trade with visual lines</li>
+                        <li><i class="fas fa-check"></i> Basic Partial TP (2 levels)</li>
+                        <li><i class="fas fa-check"></i> Auto Breakeven</li>
+                        <li><i class="fas fa-check"></i> News filter</li>
+                        <li><i class="fas fa-check"></i> 1 MT account</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Prop Firm Mode</li>
+                        <li class="disabled"><i class="fas fa-times"></i> AI Analysis</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline btn-full">Get Started</a>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Pro</h3>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>
+                            <span class="amount">39</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Everything in Starter</li>
+                        <li><i class="fas fa-check"></i> Advanced Partial TP (5 levels)</li>
+                        <li><i class="fas fa-check"></i> Prop Firm Mode</li>
+                        <li><i class="fas fa-check"></i> Custom Close presets</li>
+                        <li><i class="fas fa-check"></i> 3 MT accounts</li>
+                        <li><i class="fas fa-check"></i> AI Trade Analysis (2 reports/week)</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary btn-full">Start Free Trial</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Enterprise</h3>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>
+                            <span class="amount">99</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Everything in Pro</li>
+                        <li><i class="fas fa-check"></i> Unlimited Partial TP levels</li>
+                        <li><i class="fas fa-check"></i> Unlimited MT accounts</li>
+                        <li><i class="fas fa-check"></i> Unlimited AI reports</li>
+                        <li><i class="fas fa-check"></i> Custom AI model selection</li>
+                        <li><i class="fas fa-check"></i> API access</li>
+                        <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline btn-full">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Download</span>
+                <h2 class="section-title">Get ChartWise on <span class="gradient-text">Any Device</span></h2>
+                <p class="section-subtitle">Available for Windows, Mac, Android, and iOS</p>
+            </div>
+
+            <div class="download-grid">
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fab fa-windows"></i>
+                    </div>
+                    <h3>Windows</h3>
+                    <p>Windows 10 or later</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3>macOS</h3>
+                    <p>macOS 10.15 or later</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fab fa-android"></i>
+                    </div>
+                    <h3>Android</h3>
+                    <p>Android 8.0 or later</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Get on Play Store
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3>iOS</h3>
+                    <p>iOS 14 or later</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Get on App Store
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-ea-download">
+                <h3>MetaTrader Expert Advisor</h3>
+                <p>Download the EA for your trading platform to connect with ChartWise</p>
+                <div class="ea-buttons">
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-chart-line"></i>
+                        Download MT4 EA
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-chart-area"></i>
+                        Download MT5 EA
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Trading?</h2>
+                <p>Join thousands of traders who have streamlined their workflow with ChartWise</p>
+                <a href="#pricing" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket"></i>
+                    Start Your Free Trial
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <img src="../logo.png" alt="ChartWise" class="logo-img">
+                        <span>ChartWise</span>
+                    </a>
+                    <p>The ultimate trade manager for MT4/MT5. Automate your trading workflow and trade smarter.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 ChartWise Trade Manager. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

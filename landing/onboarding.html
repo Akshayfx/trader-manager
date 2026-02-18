@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ChartWise - Customize Your Experience</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="onboarding.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="onboarding-page">
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Onboarding Container -->
+    <div class="onboarding-container">
+        <!-- Step 1: Welcome -->
+        <div class="onboarding-step active" data-step="1">
+            <div class="step-content">
+                <div class="welcome-logo">
+                    <img src="../logo.png" alt="ChartWise" class="logo-img">
+                </div>
+                <h1>Welcome to ChartWise</h1>
+                <p class="subtitle">Let's personalize your trading experience in just a few steps</p>
+                
+                <div class="feature-preview">
+                    <div class="preview-item">
+                        <i class="fas fa-calculator"></i>
+                        <span>Smart Trade Planning</span>
+                    </div>
+                    <div class="preview-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Auto Protection</span>
+                    </div>
+                    <div class="preview-item">
+                        <i class="fas fa-brain"></i>
+                        <span>AI Analysis</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary btn-lg" onclick="nextStep()">
+                    Get Started
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Primary Intent -->
+        <div class="onboarding-step" data-step="2">
+            <div class="step-content">
+                <span class="step-badge">Question 1 of 5</span>
+                <h2>What do you want ChartWise to help you with?</h2>
+                <p class="subtitle">Select your primary trading goal</p>
+                
+                <div class="option-grid">
+                    <div class="option-card" data-value="protect">
+                        <div class="option-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Protect My Capital</h3>
+                        <p>Auto breakeven, stop loss management, and risk control</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="automate">
+                        <div class="option-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Automate My Trading</h3>
+                        <p>Partial TP, custom closes, and hands-free management</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="improve">
+                        <div class="option-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Improve Performance</h3>
+                        <p>AI analysis, trade journaling, and insights</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="propfirm">
+                        <div class="option-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Pass Prop Firm Challenge</h3>
+                        <p>Daily loss limits, news blocking, and strict rules</p>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()" id="intentNext" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Trading Style -->
+        <div class="onboarding-step" data-step="3">
+            <div class="step-content">
+                <span class="step-badge">Question 2 of 5</span>
+                <h2>What's your trading style?</h2>
+                <p class="subtitle">This helps us configure the right settings for you</p>
+                
+                <div class="option-list">
+                    <div class="option-item" data-value="scalper">
+                        <div class="option-radio"></div>
+                        <div class="option-info">
+                            <h3>Scalper</h3>
+                            <p>Quick trades, small targets, tight stops (M1-M5)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="option-item" data-value="daytrader">
+                        <div class="option-radio"></div>
+                        <div class="option-info">
+                            <h3>Day Trader</h3>
+                            <p>Multiple trades per day, close before market close (M15-H1)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="option-item" data-value="swing">
+                        <div class="option-radio"></div>
+                        <div class="option-info">
+                            <h3>Swing Trader</h3>
+                            <p>Holds for days, larger targets (H4-D1)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="option-item" data-value="position">
+                        <div class="option-radio"></div>
+                        <div class="option-info">
+                            <h3>Position Trader</h3>
+                            <p>Long-term trades, fundamental focus (Weekly+)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()" id="styleNext" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Risk Preference -->
+        <div class="onboarding-step" data-step="4">
+            <div class="step-content">
+                <span class="step-badge">Question 3 of 5</span>
+                <h2>How much risk do you typically take per trade?</h2>
+                <p class="subtitle">We'll set your default risk parameters</p>
+                
+                <div class="risk-slider-container">
+                    <div class="risk-value" id="riskValue">2%</div>
+                    <input type="range" class="risk-slider" id="riskSlider" min="0.5" max="5" step="0.5" value="2">
+                    <div class="risk-labels">
+                        <span>Conservative (0.5%)</span>
+                        <span>Moderate (2%)</span>
+                        <span>Aggressive (5%)</span>
+                    </div>
+                </div>
+                
+                <div class="risk-presets">
+                    <button class="preset-btn" data-value="0.5">Conservative</button>
+                    <button class="preset-btn active" data-value="2">Moderate</button>
+                    <button class="preset-btn" data-value="3">Aggressive</button>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Features Selection -->
+        <div class="onboarding-step" data-step="5">
+            <div class="step-content">
+                <span class="step-badge">Question 4 of 5</span>
+                <h2>Which features interest you most?</h2>
+                <p class="subtitle">Select all that apply - you can change these later</p>
+                
+                <div class="feature-checklist">
+                    <label class="feature-checkbox">
+                        <input type="checkbox" checked>
+                        <span class="checkmark"></span>
+                        <div class="feature-info">
+                            <i class="fas fa-calculator"></i>
+                            <div>
+                                <strong>Plan Trade</strong>
+                                <span>Visual SL/TP lines with auto lot sizing</span>
+                            </div>
+                        </div>
+                    </label>
+                    
+                    <label class="feature-checkbox">
+                        <input type="checkbox" checked>
+                        <span class="checkmark"></span>
+                        <div class="feature-info">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Auto Breakeven</strong>
+                                <span>Move SL to BE when in profit</span>
+                            </div>
+                        </div>
+                    </label>
+                    
+                    <label class="feature-checkbox">
+                        <input type="checkbox" checked>
+                        <span class="checkmark"></span>
+                        <div class="feature-info">
+                            <i class="fas fa-layer-group"></i>
+                            <div>
+                                <strong>Partial Take Profit</strong>
+                                <span>Scale out of positions at multiple levels</span>
+                            </div>
+                        </div>
+                    </label>
+                    
+                    <label class="feature-checkbox">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                        <div class="feature-info">
+                            <i class="fas fa-building"></i>
+                            <div>
+                                <strong>Prop Firm Mode</strong>
+                                <span>Daily loss limits and protection</span>
+                            </div>
+                        </div>
+                    </label>
+                    
+                    <label class="feature-checkbox">
+                        <input type="checkbox" checked>
+                        <span class="checkmark"></span>
+                        <div class="feature-info">
+                            <i class="fas fa-newspaper"></i>
+                            <div>
+                                <strong>News Filter</strong>
+                                <span>Economic calendar alerts</span>
+                            </div>
+                        </div>
+                    </label>
+                    
+                    <label class="feature-checkbox">
+                        <input type="checkbox" checked>
+                        <span class="checkmark"></span>
+                        <div class="feature-info">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <strong>AI Trade Analysis</strong>
+                                <span>Weekly performance reports</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Platform Selection -->
+        <div class="onboarding-step" data-step="6">
+            <div class="step-content">
+                <span class="step-badge">Question 5 of 5</span>
+                <h2>Which platforms do you trade on?</h2>
+                <p class="subtitle">We'll help you set up the right connections</p>
+                
+                <div class="platform-grid">
+                    <label class="platform-card">
+                        <input type="checkbox" checked>
+                        <div class="platform-content">
+                            <i class="fas fa-chart-line"></i>
+                            <span>MetaTrader 4</span>
+                        </div>
+                    </label>
+                    
+                    <label class="platform-card">
+                        <input type="checkbox">
+                        <div class="platform-content">
+                            <i class="fas fa-chart-area"></i>
+                            <span>MetaTrader 5</span>
+                        </div>
+                    </label>
+                    
+                    <label class="platform-card">
+                        <input type="checkbox">
+                        <div class="platform-content">
+                            <i class="fas fa-desktop"></i>
+                            <span>Windows</span>
+                        </div>
+                    </label>
+                    
+                    <label class="platform-card">
+                        <input type="checkbox">
+                        <div class="platform-content">
+                            <i class="fab fa-apple"></i>
+                            <span>macOS</span>
+                        </div>
+                    </label>
+                    
+                    <label class="platform-card">
+                        <input type="checkbox">
+                        <div class="platform-content">
+                            <i class="fab fa-android"></i>
+                            <span>Android</span>
+                        </div>
+                    </label>
+                    
+                    <label class="platform-card">
+                        <input type="checkbox">
+                        <div class="platform-content">
+                            <i class="fab fa-apple"></i>
+                            <span>iOS</span>
+                        </div>
+                    </label>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="finishOnboarding()">Complete Setup</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 7: Paywall -->
+        <div class="onboarding-step" data-step="7">
+            <div class="step-content">
+                <div class="paywall-header">
+                    <i class="fas fa-crown"></i>
+                    <h2>Unlock Your Full Potential</h2>
+                    <p>Start your 7-day free trial today</p>
+                </div>
+                
+                <div class="paywall-benefits">
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>All premium features unlocked</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Unlimited MT connections</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>AI trade analysis reports</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Priority customer support</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Cancel anytime - no commitment</span>
+                    </div>
+                </div>
+                
+                <div class="paywall-pricing">
+                    <div class="price-option recommended">
+                        <div class="price-badge">Most Popular</div>
+                        <div class="price-header">
+                            <span class="plan-name">Pro Plan</span>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">39</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-full btn-lg" onclick="startTrial()">
+                            Start Free Trial
+                        </button>
+                        <p class="trial-note">7 days free, then $39/month</p>
+                    </div>
+                    
+                    <div class="price-option">
+                        <div class="price-header">
+                            <span class="plan-name">Starter Plan</span>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">19</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-full" onclick="startTrial()">
+                            Start Free Trial
+                        </button>
+                        <p class="trial-note">7 days free, then $19/month</p>
+                    </div>
+                </div>
+                
+                <p class="paywall-guarantee">
+                    <i class="fas fa-shield-alt"></i>
+                    30-day money-back guarantee
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="onboarding.js"></script>
+</body>
+</html>

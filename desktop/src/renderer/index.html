@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ChartWise Trade Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body data-theme="dark">
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="logo-icon"><i class="fas fa-chart-line"></i></div>
+                <h1>CHARTWISE</h1>
+                <p>Trade Manager</p>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> Username or Email</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username or email" required>
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password" required>
+                </div>
+                <div class="login-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <div class="login-divider">
+                    <span>or</span>
+                </div>
+                <button type="button" class="btn btn-google btn-full" id="googleLoginBtn">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <div class="login-divider">
+                    <span>or</span>
+                </div>
+                <button type="button" class="btn btn-secondary btn-full" id="registerBtn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+            <div class="login-error" id="loginError"></div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="mainApp" style="display: none;">
+        <!-- Title Bar -->
+        <div class="title-bar" id="titleBar">
+            <div class="title-section">
+                <div class="logo"><i class="fas fa-chart-line"></i></div>
+                <div class="title-text">
+                    <span class="app-name">CHARTWISE</span>
+                    <span class="app-subtitle">Trade Manager</span>
+                </div>
+            </div>
+            <div class="window-controls">
+                <div class="mt-status" id="mtStatus" title="MT Not Connected">
+                    <i class="fas fa-plug"></i>
+                    <span class="mt-indicator">MT</span>
+                </div>
+                <div class="connection-status" id="connectionStatus" title="Disconnected">
+                    <span class="status-dot"></span>
+                </div>
+                <button class="window-btn minimize" id="minimizeBtn" title="Minimize">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button class="window-btn settings" id="settingsBtn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="window-btn theme" id="themeBtn" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="window-btn close" id="closeBtn" title="Hide">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Compact Header -->
+            <div class="compact-header">
+                <div class="lock-icon-small locked" id="lockIconSmall" title="Click to unlock">
+                    <i class="fas fa-lock"></i>
+                    <span class="lock-text">LOCKED</span>
+                </div>
+
+                <div class="account-info-compact" id="accountInfoCompact">
+                    <div class="info-item" id="balanceItem">
+                        <span class="info-label">BALANCE</span>
+                        <span class="info-value" id="accountBalance">$0.00</span>
+                    </div>
+                    <div class="info-item" id="plItem">
+                        <span class="info-label">P&L</span>
+                        <span class="info-value" id="openPL">$0.00</span>
+                    </div>
+                    <div class="info-item" id="positionsItem">
+                        <span class="info-label">POS</span>
+                        <span class="info-value" id="positionCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Button Grid -->
+            <div class="button-grid">
+                <!-- Row 1: Plan Trade & Buy/Sell Trade -->
+                <div class="button-row">
+                    <button class="action-btn btn-gradient-blue" id="planTradeBtn" title="Plan trade with calculator (Set SL/TP lines on chart)">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-calculator btn-icon"></i>
+                        <span class="btn-label">PLAN TRADE</span>
+                        <span class="btn-hint">Set SL/TP on Chart</span>
+                    </button>
+                    <div class="trade-execution-container">
+                        <button class="trade-btn sell-btn" id="sellTradeBtn" title="Execute SELL trade">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>SELL</span>
+                        </button>
+                        <div class="lot-size-display editable" id="lotSizeDisplay" title="Click to edit lot size">
+                            <input type="number" id="displayLotSizeInput" value="0.01" min="0.01" max="100" step="0.01" class="lot-size-input">
+                            <small>Lot(s)</small>
+                        </div>
+                        <button class="trade-btn buy-btn" id="buyTradeBtn" title="Execute BUY trade">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>BUY</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Row 2: Target Default & Partial TP -->
+                <div class="button-row">
+                    <button class="action-btn btn-gradient-orange" id="targetDefaultBtn" title="Set default target (Click=Apply, Long Press=Settings)">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-bullseye btn-icon"></i>
+                        <span class="btn-label">TARGET</span>
+                        <span class="btn-hint">Default TP</span>
+                    </button>
+                    <button class="action-btn btn-gradient-purple" id="partialTPBtn" title="Partial TP (Click=Toggle, Long Press=Settings)">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-layer-group btn-icon"></i>
+                        <span class="btn-label">PARTIAL TP</span>
+                        <span class="btn-hint">Scale Out</span>
+                    </button>
+                </div>
+
+                <!-- Row 3: Custom Close & Close 1/2 -->
+                <div class="button-row">
+                    <button class="action-btn btn-gradient-teal" id="customCloseBtn" title="Custom close (Click=Default%, Long Press=Presets)">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-sliders-h btn-icon"></i>
+                        <span class="btn-label">CUSTOM CLOSE</span>
+                        <span class="btn-hint">Partial Close</span>
+                    </button>
+                    <button class="action-btn btn-gradient-dark" id="closeHalfBtn" title="Close 50% of position">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-cut btn-icon"></i>
+                        <span class="btn-label">CLOSE ½</span>
+                        <span class="btn-hint">50%</span>
+                    </button>
+                </div>
+
+                <!-- Row 4: SL→BE & Auto BE -->
+                <div class="button-row">
+                    <button class="action-btn btn-gradient-cyan" id="slToBeBtn" title="Move SL to breakeven">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                        <span class="btn-label">SL → BE</span>
+                        <span class="btn-hint">Protect</span>
+                    </button>
+                    <button class="action-btn btn-outline toggle-btn" id="autoBeBtn" title="Auto BE (Click=Toggle, Long Press=Settings)">
+                        <div class="btn-glow"></div>
+                        <div class="toggle-content">
+                            <span class="btn-label">AUTO BE</span>
+                            <span class="toggle-indicator" id="autoBeIndicator">OFF</span>
+                        </div>
+                        <i class="fas fa-shield-alt btn-icon"></i>
+                    </button>
+                </div>
+
+                <!-- Row 5: AI Settings & Close Full -->
+                <div class="button-row">
+                    <button class="action-btn btn-gradient-pink" id="aiSettingsBtn" title="AI Trade Analysis & Settings">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-brain btn-icon"></i>
+                        <span class="btn-label">AI SETTINGS</span>
+                        <span class="btn-hint">Trade Analysis</span>
+                    </button>
+                    <button class="action-btn btn-gradient-red" id="closeFullBtn" title="Close all positions">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-times-circle btn-icon"></i>
+                        <span class="btn-label">CLOSE ALL</span>
+                        <span class="btn-hint">Exit</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- News Alert Panel -->
+            <div class="news-panel hidden" id="newsPanel">
+                <div class="news-header">
+                    <div class="news-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="news-info">
+                        <div class="news-title" id="newsTitle">USD - FOMC MINUTES</div>
+                        <div class="news-impact" id="newsImpact">HIGH IMPACT</div>
+                    </div>
+                </div>
+                <div class="news-status">
+                    <div class="status-badge monitoring">
+                        <span class="status-dot pulse"></span>
+                        <span>MONITORING</span>
+                    </div>
+                    <div class="countdown" id="newsCountdown">T-MINUS 6M</div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-left">
+                    <span class="version">v3.0.0</span>
+                    <span class="user-info" id="userInfo"></span>
+                </div>
+                <div class="footer-right">
+                    <button class="footer-btn" id="logoutBtn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                    <button class="footer-btn" id="helpBtn" title="Help">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plan Trade Modal (Magic Keys Style) -->
+    <div class="modal" id="planTradeModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calculator"></i> Plan Trade</h3>
+                <button class="modal-close" id="closePlanTrade">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Symbol & Direction -->
+                <div class="calc-header">
+                    <div class="symbol-display">
+                        <span id="calcSymbolDisplay">EURUSD</span>
+                        <span class="price-display" id="currentPriceDisplay">1.08500</span>
+                    </div>
+                    <div class="direction-indicator" id="directionIndicator">AUTO</div>
+                </div>
+
+                <!-- Entry Type Toggle -->
+                <div class="entry-type-toggle">
+                    <button class="toggle-btn active" id="marketEntryBtn">MARKET</button>
+                    <button class="toggle-btn" id="pendingEntryBtn">PENDING</button>
+                </div>
+
+                <!-- Input Fields -->
+                <div class="calc-inputs">
+                    <div class="input-row" id="entryPriceRow" style="display: none;">
+                        <label>Entry Price</label>
+                        <div class="input-with-pips">
+                            <input type="number" id="entryPriceInput" step="0.00001" placeholder="0.00000">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>Stop Loss Price (Set line on chart)</label>
+                        <div class="input-with-pips">
+                            <input type="number" id="calcSLInput" step="0.00001" placeholder="Drag SL line on chart" class="sl-input">
+                            <span class="pips-display" id="slPipsDisplay">-- pips</span>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>Take Profit Price (Optional - Set line on chart)</label>
+                        <div class="input-with-pips">
+                            <input type="number" id="calcTPInput" step="0.00001" placeholder="Drag TP line on chart" class="tp-input">
+                            <span class="pips-display" id="tpPipsDisplay">-- pips</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Risk Type Toggle -->
+                    <div class="risk-type-toggle">
+                        <button class="toggle-btn active" id="riskPercentBtn">% RISK</button>
+                        <button class="toggle-btn" id="riskMoneyBtn">$ RISK</button>
+                    </div>
+                    
+                    <div class="input-row">
+                        <label id="riskInputLabel">Risk %</label>
+                        <input type="number" id="calcRiskInput" value="2" min="0.1" max="100" step="0.1" class="calc-input">
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="calc-results">
+                    <div class="result-box lot-size-box">
+                        <span class="result-label">Lot Size</span>
+                        <span class="result-value" id="calcLotSize">0.00</span>
+                    </div>
+                    <div class="result-box">
+                        <span class="result-label">Risk $</span>
+                        <span class="result-value" id="calcRiskAmount">$0.00</span>
+                    </div>
+                    <div class="result-box">
+                        <span class="result-label">RR Ratio</span>
+                        <span class="result-value" id="calcRRRatio">1:0</span>
+                    </div>
+                </div>
+
+                <!-- Quick Set Buttons -->
+                <div class="quick-set-buttons">
+                    <button class="quick-btn" id="setSLPipsBtn">SL @ 20 pips</button>
+                    <button class="quick-btn" id="setTPPipsBtn">TP @ 40 pips</button>
+                    <button class="quick-btn" id="setRRBtn">TP @ 1:2 RR</button>
+                </div>
+                
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Set SL line on MT4/MT5 chart. Direction auto-detects based on SL position. Lot size calculates automatically as market moves.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelPlanTrade">Cancel</button>
+                <button class="btn btn-primary btn-green" id="confirmPlanTrade">
+                    <i class="fas fa-rocket"></i> OPEN TRADE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open Trade Modal -->
+    <div class="modal" id="openTradeModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-rocket"></i> Execute Trade</h3>
+                <button class="modal-close" id="closeOpenTrade">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="trade-summary">
+                    <div class="summary-row">
+                        <span>Symbol:</span>
+                        <strong id="execSymbol">EURUSD</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Direction:</span>
+                        <strong id="execDirection" class="buy">BUY</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Entry:</span>
+                        <strong id="execEntry">Market</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Stop Loss:</span>
+                        <strong id="execSL">-</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Take Profit:</span>
+                        <strong id="execTP">-</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Lot Size:</span>
+                        <strong id="execLotSize">0.00</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Risk:</span>
+                        <strong id="execRisk">$0.00 (2%)</strong>
+                    </div>
+                </div>
+                <div class="confirm-checkbox">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="confirmTrade" checked>
+                        <span>I confirm these trade levels are correct</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelOpenTrade">Back</button>
+                <button class="btn btn-primary btn-green" id="executeTradeBtn">
+                    <i class="fas fa-play"></i> EXECUTE TRADE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Partial TP Modal (Magic Keys Style) -->
+    <div class="modal" id="partialTPModal" style="display: none;">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3><i class="fas fa-layer-group"></i> Partial Take Profit</h3>
+                <button class="modal-close" id="closePartialTP">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Set multiple partial take profit triggers. When price hits a level, the specified percentage gets closed.</p>
+                
+                <!-- Mode Toggle -->
+                <div class="ptp-mode-toggle">
+                    <button class="toggle-btn active" id="ptpModePips">PIPS</button>
+                    <button class="toggle-btn" id="ptpModePrice">PRICE</button>
+                </div>
+                
+                <!-- Visual TP Lines (Magic Keys Style) -->
+                <div class="ptp-visual-container">
+                    <div class="ptp-lines-display" id="ptpLinesDisplay">
+                        <div class="ptp-line-item">
+                            <div class="level-badge">1</div>
+                            <div class="price-info">Not Set</div>
+                            <div class="close-info">50%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP Levels List -->
+                <div class="tp-levels-container" id="tpLevelsContainer">
+                    <!-- TP levels will be generated here -->
+                </div>
+                
+                <button class="add-level-btn" id="addTPLevelBtn">
+                    <i class="fas fa-plus"></i> Add TP Level
+                </button>
+                
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>Pips mode:</strong> Enter pips from entry. App calculates price.<br>
+                    <strong>Price mode:</strong> Enter exact price levels.<br>
+                    Keep MT4/5 open for triggers to work. Lines drawn on chart.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelPartialTP">Cancel</button>
+                <button class="btn btn-primary" id="savePartialTP">
+                    <i class="fas fa-save"></i> Save & Draw Lines
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Close Modal -->
+    <div class="modal" id="customCloseModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-sliders-h"></i> Custom Close</h3>
+                <button class="modal-close" id="closeCustomClose">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Quick partial close with preset percentages</p>
+                
+                <div class="custom-close-grid">
+                    <button class="close-preset-btn" data-percent="25">
+                        <span class="preset-percent">25%</span>
+                        <span class="preset-label">Quarter</span>
+                    </button>
+                    <button class="close-preset-btn" data-percent="33">
+                        <span class="preset-percent">33%</span>
+                        <span class="preset-label">Third</span>
+                    </button>
+                    <button class="close-preset-btn" data-percent="50">
+                        <span class="preset-percent">50%</span>
+                        <span class="preset-label">Half</span>
+                    </button>
+                    <button class="close-preset-btn" data-percent="75">
+                        <span class="preset-percent">75%</span>
+                        <span class="preset-label">Three Qtr</span>
+                    </button>
+                </div>
+                
+                <div class="custom-close-manual">
+                    <label>Custom %</label>
+                    <div class="manual-input-row">
+                        <input type="number" id="customClosePercent" min="1" max="99" value="10" class="calc-input">
+                        <button class="btn btn-primary" id="customCloseExecute">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Settings Modal -->
+    <div class="modal" id="aiSettingsModal" style="display: none;">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3><i class="fas fa-brain"></i> AI Trade Analysis</h3>
+                <button class="modal-close" id="closeAISettings">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- AI Trade Analysis Report -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-chart-bar section-icon"></i>
+                        <h4>Trade Analysis Report</h4>
+                    </div>
+                    <p class="section-desc">AI-powered analysis of your trading performance</p>
+                    
+                    <div class="ai-report-card" id="aiReportCard">
+                        <div class="report-header">
+                            <div class="report-status">
+                                <i class="fas fa-robot"></i>
+                                <span>Next Report: <strong id="nextReportDate">Weekly (Auto)</strong></span>
+                            </div>
+                            <div class="report-usage">
+                                <span id="reportUsage">0/2 used this week</span>
+                            </div>
+                        </div>
+                        
+                        <div class="report-stats" id="reportStats">
+                            <div class="stat-box">
+                                <span class="stat-label">Win Rate</span>
+                                <span class="stat-value" id="aiWinRate">--</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Best Pair</span>
+                                <span class="stat-value" id="aiBestPair">--</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Avg R:R</span>
+                                <span class="stat-value" id="aiAvgRR">--</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Total Trades</span>
+                                <span class="stat-value" id="aiTotalTrades">--</span>
+                            </div>
+                        </div>
+                        
+                        <div class="report-insights" id="reportInsights">
+                            <h5><i class="fas fa-lightbulb"></i> AI Insights</h5>
+                            <ul id="insightsList">
+                                <li>Generate your first report to see AI insights</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-generate-report" id="generateReportBtn">
+                            <i class="fas fa-magic"></i> Generate Report
+                        </button>
+                        <p class="report-limit-note">Maximum 2 manual reports per week. Reports auto-generate weekly and monthly.</p>
+                    </div>
+                </div>
+
+                <!-- AI Core Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-robot section-icon"></i>
+                        <h4>AI Core Settings</h4>
+                    </div>
+                    <div class="settings-card">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Enable AI Analysis</span>
+                                <span class="setting-hint">Allow AI to analyze your trades</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="aiEnabled" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">AI Model</span>
+                                <span class="setting-hint">Select analysis depth</span>
+                            </div>
+                            <select class="setting-select" id="aiModel">
+                                <option value="balanced" selected>Balanced (Recommended)</option>
+                                <option value="conservative">Conservative</option>
+                                <option value="aggressive">Aggressive</option>
+                                <option value="scalper">Scalper Mode</option>
+                                <option value="swing">Swing Trader</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Auto-Generate Reports</span>
+                                <span class="setting-hint">Weekly and monthly auto-reports</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="aiAutoReports" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Previous Reports -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-history section-icon"></i>
+                        <h4>Previous Reports</h4>
+                    </div>
+                    <div class="previous-reports-list" id="previousReportsList">
+                        <div class="no-reports">No reports generated yet</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelAISettings">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal" style="display: none;">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3><i class="fas fa-cog"></i> Settings</h3>
+                <button class="modal-close" id="closeSettings">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-tabs">
+                    <button class="tab-btn active" data-tab="display">Display</button>
+                    <button class="tab-btn" data-tab="risk">Risk</button>
+                    <button class="tab-btn" data-tab="target">Target</button>
+                    <button class="tab-btn" data-tab="autobe">Auto BE</button>
+                    <button class="tab-btn" data-tab="partial">Partial TP</button>
+                    <button class="tab-btn" data-tab="customclose">Custom Close</button>
+                    <button class="tab-btn" data-tab="propfirm">Prop Firm</button>
+                    <button class="tab-btn" data-tab="news">News</button>
+                    <button class="tab-btn" data-tab="mt">MT</button>
+                    <button class="tab-btn" data-tab="download">Download</button>
+                </div>
+
+                <!-- Display Settings Tab -->
+                <div class="tab-content active" id="tab-display">
+                    <div class="settings-section">
+                        <h4>Display Options</h4>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Show Balance</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="showBalance" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Show Open P&L</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="showPL" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Show Positions Count</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="showPositions" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Theme</span>
+                            </div>
+                            <select class="setting-select" id="themeSelect">
+                                <option value="dark" selected>Dark (AMOLED)</option>
+                                <option value="light">Light</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other tabs... -->
+                <div class="tab-content" id="tab-risk">
+                    <div class="settings-section">
+                        <h4>Risk Management</h4>
+                        <div class="setting-item">
+                            <label>Default Risk %</label>
+                            <input type="number" id="defaultRisk" value="2" min="0.5" max="5" step="0.5">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Target Settings Tab -->
+                <div class="tab-content" id="tab-target">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-bullseye"></i> Target Default Settings</h4>
+                        <p class="section-desc">Configure default take profit behavior when using Target button</p>
+                        
+                        <div class="settings-card">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Target Mode</span>
+                                    <span class="setting-hint">How to calculate default take profit</span>
+                                </div>
+                                <select class="setting-select" id="targetMode">
+                                    <option value="rr" selected>Risk:Reward Ratio</option>
+                                    <option value="fixed">Fixed Money Amount</option>
+                                    <option value="pips">Fixed Pips</option>
+                                </select>
+                            </div>
+                            
+                            <!-- RR Mode Settings -->
+                            <div id="targetRRSettings">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <span class="setting-label">Default R:R Ratio</span>
+                                        <span class="setting-hint">Take profit at this risk multiple</span>
+                                    </div>
+                                    <div class="input-with-unit">
+                                        <input type="number" id="targetRRValue" value="2" min="0.5" step="0.5">
+                                        <span>:1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Fixed Money Settings -->
+                            <div id="targetFixedSettings" style="display: none;">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <span class="setting-label">Target Profit ($)</span>
+                                        <span class="setting-hint">Fixed dollar amount per trade</span>
+                                    </div>
+                                    <div class="input-with-unit">
+                                        <input type="number" id="targetFixedAmount" value="100" min="1">
+                                        <span>USD</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Fixed Pips Settings -->
+                            <div id="targetPipsSettings" style="display: none;">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <span class="setting-label">Target Pips</span>
+                                        <span class="setting-hint">Fixed pips from entry</span>
+                                    </div>
+                                    <div class="input-with-unit">
+                                        <input type="number" id="targetPipsValue" value="40" min="1">
+                                        <span>pips</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Auto-Apply on Trade Open</span>
+                                    <span class="setting-hint">Automatically set TP when opening trade</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="targetAutoApply" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Minimum R:R</span>
+                                    <span class="setting-hint">Never accept trades below this ratio</span>
+                                </div>
+                                <div class="input-with-unit">
+                                    <input type="number" id="targetMinRR" value="1" min="0.5" step="0.5">
+                                    <span>:1</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-box">
+                            <i class="fas fa-info-circle"></i>
+                            <p><strong>Target Default:</strong> When you click the Target button, it will apply your configured default take profit based on these settings. Long press the Target button to quickly access these settings.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-autobe">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-shield-alt"></i> Auto Breakeven Settings</h4>
+                        <p class="section-desc">Configure when and how stop loss moves to breakeven</p>
+                        
+                        <div class="settings-card">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Enable Auto BE</span>
+                                    <span class="setting-hint">Automatically move SL to breakeven</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoBeEnabled">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Trigger Pips</span>
+                                    <span class="setting-hint">Pips in profit before moving SL</span>
+                                </div>
+                                <div class="input-with-unit">
+                                    <input type="number" id="beTriggerPips" value="20" min="5">
+                                    <span>pips</span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Plus Pips</span>
+                                    <span class="setting-hint">Additional pips past entry</span>
+                                </div>
+                                <div class="input-with-unit">
+                                    <input type="number" id="bePlusPips" value="2" min="0">
+                                    <span>pips</span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">SL Position</span>
+                                    <span class="setting-hint">Where to place SL at breakeven</span>
+                                </div>
+                                <select class="setting-select" id="beSlPosition">
+                                    <option value="entry">At Entry (Breakeven)</option>
+                                    <option value="profit">In Profit (+commission)</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Protect Partial Positions</span>
+                                    <span class="setting-hint">Also move SL for partial closes</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="beProtectPartial" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-partial">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-layer-group"></i> Partial Take Profit Settings</h4>
+                        <p class="section-desc">Configure how partial take profits are triggered and executed</p>
+                        
+                        <div class="settings-card">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Trigger Mode</span>
+                                    <span class="setting-hint">Use pips from entry or exact price</span>
+                                </div>
+                                <select class="setting-select" id="partialTPMode">
+                                    <option value="pips">Pips from Entry</option>
+                                    <option value="price">Exact Price</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <h5 style="margin-top: 20px; margin-bottom: 12px; font-size: 12px; color: var(--text-secondary);">TP Levels</h5>
+                        <div class="tp-settings-table">
+                            <div class="tp-header">
+                                <span>Level</span>
+                                <span id="tpHeaderValue">Pips</span>
+                                <span>Close %</span>
+                            </div>
+                            <div class="tp-row">
+                                <span>TP 1</span>
+                                <input type="number" id="tp1Value" placeholder="30" step="1" value="30">
+                                <input type="number" id="tp1Percent" value="50" min="1" max="100">
+                            </div>
+                            <div class="tp-row">
+                                <span>TP 2</span>
+                                <input type="number" id="tp2Value" placeholder="50" step="1" value="50">
+                                <input type="number" id="tp2Percent" value="30" min="1" max="100">
+                            </div>
+                            <div class="tp-row">
+                                <span>TP 3</span>
+                                <input type="number" id="tp3Value" placeholder="80" step="1" value="80">
+                                <input type="number" id="tp3Percent" value="20" min="1" max="100">
+                            </div>
+                        </div>
+                        <div class="info-box">
+                            <i class="fas fa-info-circle"></i>
+                            <p>When price hits a TP level, the specified percentage of your position will be closed automatically. Keep MT4/5 open for triggers to work.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Close Settings Tab -->
+                <div class="tab-content" id="tab-customclose">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-sliders-h"></i> Custom Close Settings</h4>
+                        <p class="section-desc">Configure default close percentage and quick presets</p>
+                        
+                        <div class="settings-card">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Default Close %</span>
+                                    <span class="setting-hint">Percentage closed on single click</span>
+                                </div>
+                                <div class="input-with-unit">
+                                    <input type="number" id="customCloseDefaultPercent" value="50" min="1" max="99">
+                                    <span>%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 style="margin-top: 20px; margin-bottom: 12px; font-size: 12px; color: var(--text-secondary);">Quick Presets (Long Press)</h5>
+                        <div class="custom-close-presets-settings">
+                            <div class="preset-row">
+                                <label>Preset 1</label>
+                                <input type="number" id="customClosePreset1" value="25" min="1" max="99">
+                                <span>%</span>
+                            </div>
+                            <div class="preset-row">
+                                <label>Preset 2</label>
+                                <input type="number" id="customClosePreset2" value="33" min="1" max="99">
+                                <span>%</span>
+                            </div>
+                            <div class="preset-row">
+                                <label>Preset 3</label>
+                                <input type="number" id="customClosePreset3" value="50" min="1" max="99">
+                                <span>%</span>
+                            </div>
+                            <div class="preset-row">
+                                <label>Preset 4</label>
+                                <input type="number" id="customClosePreset4" value="75" min="1" max="99">
+                                <span>%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prop Firm Mode Tab -->
+                <div class="tab-content" id="tab-propfirm">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-building"></i> Prop Firm Mode</h4>
+                        <p class="section-desc">Configure prop firm challenge protection settings</p>
+                        
+                        <div class="settings-card">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Enable Prop Firm Mode</span>
+                                    <span class="setting-hint">Activate strict risk rules for prop firm challenges</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="propFirmEnabled">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Daily Loss Limit ($)</span>
+                                    <span class="setting-hint">Maximum daily loss allowed</span>
+                                </div>
+                                <div class="input-with-unit">
+                                    <input type="number" id="propDailyLossLimit" value="500" min="1">
+                                    <span>USD</span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Daily Loss Limit (%)</span>
+                                    <span class="setting-hint">As percentage of account</span>
+                                </div>
+                                <div class="input-with-unit">
+                                    <input type="number" id="propDailyLossPercent" value="4.5" min="0.1" step="0.1">
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Prevent New Trades on Limit</span>
+                                    <span class="setting-hint">Block opening new trades when limit hit</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="propPreventNewTrades" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Close All Trades on Limit</span>
+                                    <span class="setting-hint">Auto-close all open trades when limit hit</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="propCloseOnLimit">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Block Trading During News</span>
+                                    <span class="setting-hint">Prevent trades during high-impact news</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="propNewsBlock" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Include Floating Loss</span>
+                                    <span class="setting-hint">Count unrealized P&L in daily loss</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="propIncludeFloating" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="prop-firm-status" id="propFirmStatus">
+                            <div class="status-header">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Today's Status</span>
+                            </div>
+                            <div class="status-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Daily Loss</span>
+                                    <span class="stat-value" id="todayLoss">$0.00</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Remaining</span>
+                                    <span class="stat-value" id="remainingLimit">$500.00</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Status</span>
+                                    <span class="stat-value safe" id="propStatusText">SAFE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News Settings Tab -->
+                <div class="tab-content" id="tab-news">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-newspaper"></i> News Filter Settings</h4>
+                        
+                        <div class="news-settings-group">
+                            <h5>Currencies to Monitor</h5>
+                            <div class="currency-checkboxes">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsUSD" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">USD</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsEUR" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">EUR</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsGBP" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">GBP</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsJPY" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">JPY</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsAUD" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">AUD</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsCAD" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">CAD</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsCHF" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">CHF</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="newsNZD" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="currency-label">NZD</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="news-settings-group">
+                            <h5>Impact Levels to Show</h5>
+                            <div class="impact-checkboxes">
+                                <label class="checkbox-item impact-high">
+                                    <input type="checkbox" id="newsHighImpact" checked>
+                                    <span class="checkmark high"></span>
+                                    <span class="impact-dot high"></span>
+                                    <span class="impact-label">High Impact</span>
+                                </label>
+                                <label class="checkbox-item impact-medium">
+                                    <input type="checkbox" id="newsMediumImpact" checked>
+                                    <span class="checkmark medium"></span>
+                                    <span class="impact-dot medium"></span>
+                                    <span class="impact-label">Medium Impact</span>
+                                </label>
+                                <label class="checkbox-item impact-low">
+                                    <input type="checkbox" id="newsLowImpact">
+                                    <span class="checkmark low"></span>
+                                    <span class="impact-dot low"></span>
+                                    <span class="impact-label">Low Impact</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-label">Minutes Before News</span>
+                                <span class="setting-hint">Start warning before news release</span>
+                            </div>
+                            <input type="number" id="newsMinutesBefore" value="15" min="1" max="60">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-mt">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-plug"></i> MetaTrader Connection</h4>
+                        <div class="mt-connection-status" id="mtSettingsStatus">
+                            <div class="mt-status-indicator disconnected">
+                                <i class="fas fa-unlink"></i>
+                                <span>Not Connected</span>
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Magic Key</span>
+                                    <span class="setting-hint">Unique identifier for this connection</span>
+                                </div>
+                                <input type="text" id="mtMagicKey" value="CHARTWISE_001" style="text-transform: uppercase; width: 140px;">
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-label">Auto Connect</span>
+                                    <span class="setting-hint">Connect automatically on startup</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="mtAutoConnect" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mt-actions">
+                            <button class="btn btn-primary" id="connectMT4Btn">
+                                <i class="fas fa-plug"></i> Connect MT4
+                            </button>
+                            <button class="btn btn-primary" id="connectMT5Btn">
+                                <i class="fas fa-plug"></i> Connect MT5
+                            </button>
+                            <button class="btn btn-secondary" id="disconnectMTBtn">
+                                <i class="fas fa-unlink"></i> Disconnect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download Tab -->
+                <div class="tab-content" id="tab-download">
+                    <div class="settings-section">
+                        <h4><i class="fas fa-download"></i> Download MT4/MT5 EA</h4>
+                        <p class="section-desc">Download the Expert Advisor for your MetaTrader platform</p>
+                        
+                        <div class="download-cards">
+                            <div class="download-card">
+                                <div class="download-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="download-info">
+                                    <h5>MetaTrader 4</h5>
+                                    <p>ChartWise_Manager.mq4</p>
+                                    <span class="version">v3.0</span>
+                                </div>
+                                <a href="downloads/ChartWise_Manager_MT4.mq4" download class="btn btn-primary download-btn">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                            
+                            <div class="download-card">
+                                <div class="download-icon">
+                                    <i class="fas fa-chart-area"></i>
+                                </div>
+                                <div class="download-info">
+                                    <h5>MetaTrader 5</h5>
+                                    <p>ChartWise_Manager.mq5</p>
+                                    <span class="version">v3.0</span>
+                                </div>
+                                <a href="downloads/ChartWise_Manager_MT5.mq5" download class="btn btn-primary download-btn">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="install-instructions">
+                            <h5><i class="fas fa-info-circle"></i> Installation Instructions</h5>
+                            <ol>
+                                <li>Download the EA file for your platform</li>
+                                <li>Open MetaTrader and go to <strong>File → Open Data Folder</strong></li>
+                                <li>Navigate to <strong>MQL4/Experts</strong> (or <strong>MQL5/Experts</strong>)</li>
+                                <li>Copy the downloaded file into the Experts folder</li>
+                                <li>Restart MetaTrader</li>
+                                <li>Find "ChartWise Manager" in Navigator → Expert Advisors</li>
+                                <li>Drag it to your chart</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelSettings">Cancel</button>
+                <button class="btn btn-primary" id="saveSettings">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirm Action</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Are you sure?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelAction">Cancel</button>
+                <button class="btn btn-danger" id="confirmAction">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

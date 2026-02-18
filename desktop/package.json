@@ -1,0 +1,136 @@
+{
+  "name": "chartwise-desktop",
+  "version": "3.0.0",
+  "description": "ChartWise Trade Manager Desktop App - Smart Trading Automation for MT4/MT5",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
+    "build": "node build.js",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "ws": "^8.14.2",
+    "uuid": "^9.0.1",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "io.chartwise.desktop",
+    "productName": "ChartWise Trade Manager",
+    "copyright": "Copyright © 2024 ChartWise",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../mt4",
+        "to": "mt4",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "../mt5",
+        "to": "mt5",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "publisherName": "ChartWise Team"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.finance",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "category": "Office",
+      "maintainer": "ChartWise Team",
+      "vendor": "ChartWise",
+      "synopsis": "Smart Trading Automation for MT4/MT5",
+      "description": "ChartWise Trade Manager - The ultimate trade management tool for MetaTrader 4 and 5"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ChartWise Trade Manager",
+      "include": "installer.nsh",
+      "license": "LICENSE.txt"
+    },
+    "dmg": {
+      "title": "ChartWise Trade Manager",
+      "icon": "assets/icon.icns",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  },
+  "keywords": ["trading", "mt4", "mt5", "forex", "trade-manager", "automation"],
+  "author": {
+    "name": "ChartWise Team",
+    "email": "support@chartwise.app"
+  },
+  "license": "MIT",
+  "homepage": "https://chartwise.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chartwise/chartwise-desktop.git"
+  }
+}

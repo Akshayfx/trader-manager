@@ -1,0 +1,41 @@
+# OS X
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist/
+build/
+apk/
+stats.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mobile
+mobile/android/app/build/
+mobile/android/.gradle/
+mobile/ios/Pods/
+mobile/ios/build/
+
+# Backend
+backend/logs/
+
+# ChartWise specific
+temp_init/
