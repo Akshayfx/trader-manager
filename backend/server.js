@@ -28,6 +28,7 @@ const adminRoutes = require('./routes/admin');
 const newsRoutes = require('./routes/news');
 const propFirmRoutes = require('./routes/propfirm');
 const mtRoutes = require('./routes/mt');
+const onboardingRoutes = require('./routes/onboarding');
 
 // Services
 const newsService = require('./services/newsService');
@@ -545,6 +546,7 @@ app.use('/api/settings', authenticateToken, settingsRoutes);
 app.use('/api/news', authenticateToken, newsRoutes);
 app.use('/api/propfirm', authenticateToken, propFirmRoutes);
 app.use('/api/mt', authenticateToken, mtRoutes);
+app.use('/api/onboarding', authenticateToken, onboardingRoutes);
 app.use('/api/admin', authenticateToken, requireAdmin, adminRoutes);
 
 // Health check
